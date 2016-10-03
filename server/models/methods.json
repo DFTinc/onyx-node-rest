@@ -1,0 +1,137 @@
+{
+  "name": "methods",
+  "plural": "methods",
+  "base": "Model",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {
+    "computeNfiq": {
+      "isStatic": true,
+      "accepts": [
+        {
+          "arg": "image",
+          "type": "string",
+          "required": true,
+          "description": "image provided WSQ image data encoded as a Base64 string."
+        },
+        {
+          "arg": "ppi",
+          "type": "number",
+          "required": false,
+          "description": "ppi specifies the Pixels-per-inch of the capture WSQ image."
+        },
+        {
+          "arg": "opts",
+          "type": "number",
+          "required": false,
+          "description": "opts are additional options to pass to the computation (usually not used)."
+        }
+      ],
+      "returns": [
+        {
+          "arg": "response",
+          "type": "object",
+          "root": true,
+          "description": "Returns NFIQ score and MLP score."
+        }
+      ],
+      "description": "Compute the NFIQ score of the Base64 encoded WSQ image.",
+      "http": [
+        {
+          "path": "/computenfiq",
+          "verb": "post"
+        }
+      ]
+    },
+    "verify": {
+      "isStatic": true,
+      "accepts": [
+        {
+          "arg": "reference",
+          "type": "string",
+          "required": true,
+          "description": "First WSQ fingerprint image encoded as Base64."
+        },
+        {
+          "arg": "probe",
+          "type": "string",
+          "required": true,
+          "description": "Second WSQ fingerprint image encoded as Base64."
+        }
+      ],
+      "returns": [
+        {
+          "arg": "score",
+          "type": "number",
+          "root": false,
+          "description": "Resulting verification score from 0-10000 (higher is better)."
+        }
+      ],
+      "description": "Verifies two WSQ encoded fingerprint images.",
+      "http": [
+        {
+          "path": "/verify",
+          "verb": "post"
+        }
+      ]
+    },
+    "preprocessFingerprint": {
+      "isStatic": true,
+      "accepts": [
+        {
+          "arg": "src",
+          "type": "string",
+          "required": true,
+          "description": "WSQ formatted image encoded as Base64."
+        }
+      ],
+      "returns": [
+        {
+          "arg": "response",
+          "type": "object",
+          "root": true,
+          "description": "Returns focus quality and preprocessed WSQ formatted image encoded as Base64."
+        }
+      ],
+      "description": "Preprocesses WSQ formatted fingerprint image, and returns result.",
+      "http": [
+        {
+          "path": "/preprocessfingerprint",
+          "verb": "post"
+        }
+      ]
+    },
+    "enhanceFingerprint": {
+      "isStatic": true,
+      "accepts": [
+        {
+          "arg": "src",
+          "type": "string",
+          "required": true,
+          "description": "WSQ formatted image encoded as Base64."
+        }
+      ],
+      "returns": [
+        {
+          "arg": "response",
+          "type": "object",
+          "root": true,
+          "description": "Returns enhanced WSQ formatted image encoded as Base64."
+        }
+      ],
+      "description": "Enhanced a WSQ formatted image encoded as Base64.",
+      "http": [
+        {
+          "path": "/enhancefingerprint",
+          "verb": "post"
+        }
+      ]
+    }
+  }
+}
