@@ -55,6 +55,24 @@ module.exports = function(methods) {
   };
 
   /**
+   * Generates a fingerprint template given a WSQ formatted image encoded as Base64.
+   * @param {string} src WSQ formatted image encoded as Base64.
+   * @param {Function(Error, string)} callback
+   */
+
+  methods.generateFingerprintTemplate = function(src, callback) {
+    var srcImage = onyx.wsqToMat(new Buffer(src, 'base64'));
+    var ft = onyx.generateFingerprintTemplate(srcImage);
+
+    var response = {
+      fingerLocation: ft.getFingerLocation(),
+      quality: ft.getQuality(),
+      data: ft.getData().toString('base64')
+    };
+    callback(null, response);
+  };
+
+  /**
    * Preprocesses WSQ formatted fingerprint image, and returns result.
    * @param {string} src WSQ formatted image encoded as Base64.
    * @param {Function(Error, string)} callback

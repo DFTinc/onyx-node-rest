@@ -125,10 +125,36 @@
           "description": "Returns enhanced WSQ formatted image encoded as Base64."
         }
       ],
-      "description": "Enhanced a WSQ formatted image encoded as Base64.",
+      "description": "Enhances a WSQ formatted image encoded as Base64.",
       "http": [
         {
           "path": "/enhancefingerprint",
+          "verb": "post"
+        }
+      ]
+    },
+    "generateFingerprintTemplate": {
+      "isStatic": true,
+      "accepts": [
+        {
+          "arg": "src",
+          "type": "string",
+          "required": true,
+          "description": "WSQ formatted image encoded as Base64."
+        }
+      ],
+      "returns": [
+        {
+          "arg": "response",
+          "type": "object",
+          "root": true,
+          "description": "Returns a Base64 encoded FingerprintTemplate object."
+        }
+      ],
+      "description": "Generates a fingerprint template given a WSQ formatted image encoded as Base64.",
+      "http": [
+        {
+          "path": "/generatefingerprinttemplate",
           "verb": "post"
         }
       ]
