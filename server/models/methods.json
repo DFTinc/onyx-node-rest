@@ -184,6 +184,32 @@
           "verb": "post"
         }
       ]
+    },
+    "identify": {
+      "isStatic": true,
+      "accepts": [
+        {
+          "arg": "image",
+          "type": "string",
+          "required": true,
+          "description": "WSQ formatted image with Base64 encoding."
+        }
+      ],
+      "returns": [
+        {
+          "arg": "response",
+          "type": "object",
+          "root": true,
+          "description": "Status from external AFIS for identification."
+        }
+      ],
+      "description": "Performs identification with external server.",
+      "http": [
+        {
+          "path": "/identify",
+          "verb": "post"
+        }
+      ]
     }
   }
 }

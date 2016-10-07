@@ -29,8 +29,8 @@ module.exports = function(methods) {
     var nfiqMetrics = onyx.computeNfiq(mat, ppi || 500, opts || 0);
 
     var response = {
-      "nfiqScore": nfiqMetrics.nfiqScore,
-      "mlpScore": nfiqMetrics.mlpScore
+      nfiqScore: nfiqMetrics.nfiqScore,
+      mlpScore: nfiqMetrics.mlpScore
     };
     callback(null, response);
   };
@@ -48,8 +48,8 @@ module.exports = function(methods) {
     onyx.enhanceFingerprint(srcImage, enhanced, energyMask);
 
     var response = {
-      "enhanced": onyx.matToWsq(enhanced).toString('base64'),
-      "energyMask": onyx.matToWsq(energyMask).toString('base64')
+      enhanced: onyx.matToWsq(enhanced).toString('base64'),
+      energyMask: onyx.matToWsq(energyMask).toString('base64')
     };
     callback(null, response);
   };
@@ -62,10 +62,12 @@ module.exports = function(methods) {
    */
 
   methods.enroll = function(image, callback) {
-    var src = onyx.wsqToMat(new Buffer(src, 'base64'));
+    var srcImage = onyx.wsqToMat(new Buffer(image, 'base64'));
 
     var dstImage = createEmptyMat(srcImage.rows, srcImage.cols, srcImage.type);
     var focusQuality = onyx.preprocessFingerprint(srcImage, dstImage);
+
+    // NOTE: Pseudocode below, please modify as needed.
 
     var response;
     if(focusQuality > 30.0) {
@@ -73,11 +75,15 @@ module.exports = function(methods) {
       var enrollBase64 = enrollBuffer.toString('base64');
       // TODO: send enrollBase64 to enrollment database
       response = {
-        status: "Successfully enrolled fingerprint to external database."
+        status: "Successfully enrolled fingerprint to AFIS database.",
+        enrollQuality: 100.0,
+        otherUsefulMetric: 25.0,
+        generatedUserId: Math.round(100.0*Math.random()) // replace with database ID for client if needed
       }
     } else {
       response = {
-        status: "Failed to enroll fingerprint to external database."
+        status: "Failed to enroll fingerprint in AFIS database.",
+        enrollQuality: -1.0
       }
     }
 
@@ -101,6 +107,42 @@ module.exports = function(methods) {
     };
     callback(null, response);
   };
+
+  /**
+   * Performs identification with external server.
+   * @param {string} image WSQ formatted image with Base64 encoding.
+   * @param {Function(Error, object)} callback
+   */
+
+  methods.identify = function(image, callback) {
+    var srcImage = onyx.wsqToMat(new Buffer(image, 'base64'));
+
+    var dstImage = createEmptyMat(srcImage.rows, srcImage.cols, srcImage.type);
+    var focusQuality = onyx.preprocessFingerprint(srcImage, dstImage);
+
+    // NOTE: Pseudocode below, please modify as needed.
+
+    var response;
+    if(focusQuality > 30.0) {
+      var identifyBuffer = onyx.matToWsq(dstImage);
+      var identifyBase64 = identifyBuffer.toString('base64');
+      // TODO: send identifyBase64 to AFIS database
+      response = {
+        status: "Successfully identified fingerprint in AFIS database.",
+        score: 100.0,
+        userId: Math.round(100.0*Math.random()),
+        otherUserInfo: "Relevant data to be shown on the client"
+      }
+    } else {
+      response = {
+        status: "Failed to idenfity fingerprint in AFIS database.",
+        score: -1.0
+      }
+    }
+
+    callback(null, response);
+  };
+
 
   /**
    * Preprocesses WSQ formatted fingerprint image, and returns result.
