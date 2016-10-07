@@ -158,6 +158,32 @@
           "verb": "post"
         }
       ]
+    },
+    "enroll": {
+      "isStatic": true,
+      "accepts": [
+        {
+          "arg": "image",
+          "type": "string",
+          "required": true,
+          "description": "WSQ formatted image encoded as Base64."
+        }
+      ],
+      "returns": [
+        {
+          "arg": "response",
+          "type": "object",
+          "root": true,
+          "description": "Status response from external fingerprint database."
+        }
+      ],
+      "description": "Enrolls a raw fingerprint image into external database.",
+      "http": [
+        {
+          "path": "/enroll",
+          "verb": "post"
+        }
+      ]
     }
   }
 }

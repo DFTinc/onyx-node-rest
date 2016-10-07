@@ -55,6 +55,36 @@ module.exports = function(methods) {
   };
 
   /**
+   * Enrolls a raw fingerprint image into external database.
+   * NOTE: Additional fields can be sent from the client with user identifiable data.
+   * @param {string} image WSQ formatted image encoded as Base64.
+   * @param {Function(Error, object)} callback
+   */
+
+  methods.enroll = function(image, callback) {
+    var src = onyx.wsqToMat(new Buffer(src, 'base64'));
+
+    var dstImage = createEmptyMat(srcImage.rows, srcImage.cols, srcImage.type);
+    var focusQuality = onyx.preprocessFingerprint(srcImage, dstImage);
+
+    var response;
+    if(focusQuality > 30.0) {
+      var enrollBuffer = onyx.matToWsq(dstImage);
+      var enrollBase64 = enrollBuffer.toString('base64');
+      // TODO: send enrollBase64 to enrollment database
+      response = {
+        status: "Successfully enrolled fingerprint to external database."
+      }
+    } else {
+      response = {
+        status: "Failed to enroll fingerprint to external database."
+      }
+    }
+
+    callback(null, response);
+  };
+
+  /**
    * Generates a fingerprint template given a WSQ formatted image encoded as Base64.
    * @param {string} src WSQ formatted image encoded as Base64.
    * @param {Function(Error, string)} callback
