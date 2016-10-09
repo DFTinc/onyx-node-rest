@@ -210,6 +210,38 @@
           "verb": "post"
         }
       ]
+    },
+    "pyramidImage": {
+      "isStatic": true,
+      "accepts": [
+        {
+          "arg": "image",
+          "type": "string",
+          "required": true,
+          "description": "WSQ formatted image encoded as Base64."
+        },
+        {
+          "arg": "scales",
+          "type": "array",
+          "required": true,
+          "description": "An array of numbers defining the pyramid scales (3 is recommended)."
+        }
+      ],
+      "returns": [
+        {
+          "arg": "response",
+          "type": "array",
+          "root": false,
+          "description": "An array of WSQ formatted images encoded as Base64 at the specified scales."
+        }
+      ],
+      "description": "Pyramids a WSQ formatted image in Base64 encoding to multiple scales.",
+      "http": [
+        {
+          "path": "/pyramidimage",
+          "verb": "post"
+        }
+      ]
     }
   }
 }

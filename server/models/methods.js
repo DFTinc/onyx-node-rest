@@ -2,19 +2,6 @@
 
 var onyx = require('onyx-node');
 
-function createEmptyMat(rows, cols, type) {
-  var rows = rows || 0;
-  var cols = cols || 0;
-  var data = new Buffer(rows*cols);
-
-  return {
-    rows: rows,
-    cols: cols,
-    type: type || 0,
-    data: data
-  };
-}
-
 module.exports = function(methods) {
   /**
    * Compute the NFIQ score of the Base64 encoded WSQ image.
@@ -43,13 +30,11 @@ module.exports = function(methods) {
 
   methods.enhanceFingerprint = function(src, callback) {
     var srcImage = onyx.wsqToMat(new Buffer(src, 'base64'));
-    var enhanced = createEmptyMat(srcImage.rows, srcImage.cols, srcImage.type);
-    var energyMask = createEmptyMat(srcImage.rows, srcImage.cols, srcImage.type);
-    onyx.enhanceFingerprint(srcImage, enhanced, energyMask);
+    var results = onyx.enhanceFingerprint(srcImage);
 
     var response = {
-      enhanced: onyx.matToWsq(enhanced).toString('base64'),
-      energyMask: onyx.matToWsq(energyMask).toString('base64')
+      enhanced: onyx.matToWsq(results.enhanced).toString('base64'),
+      energyMask: onyx.matToWsq(results.energyMask).toString('base64')
     };
     callback(null, response);
   };
@@ -64,14 +49,13 @@ module.exports = function(methods) {
   methods.enroll = function(image, callback) {
     var srcImage = onyx.wsqToMat(new Buffer(image, 'base64'));
 
-    var dstImage = createEmptyMat(srcImage.rows, srcImage.cols, srcImage.type);
-    var focusQuality = onyx.preprocessFingerprint(srcImage, dstImage);
+    var results = onyx.preprocessFingerprint(srcImage);
 
     // NOTE: Pseudocode below, please modify as needed.
 
     var response;
-    if(focusQuality > 30.0) {
-      var enrollBuffer = onyx.matToWsq(dstImage);
+    if(results.retval > 30.0) {
+      var enrollBuffer = onyx.matToWsq(results.dst);
       var enrollBase64 = enrollBuffer.toString('base64');
       // TODO: send enrollBase64 to enrollment database
       response = {
@@ -116,15 +100,13 @@ module.exports = function(methods) {
 
   methods.identify = function(image, callback) {
     var srcImage = onyx.wsqToMat(new Buffer(image, 'base64'));
-
-    var dstImage = createEmptyMat(srcImage.rows, srcImage.cols, srcImage.type);
-    var focusQuality = onyx.preprocessFingerprint(srcImage, dstImage);
+    var results = onyx.preprocessFingerprint(srcImage);
 
     // NOTE: Pseudocode below, please modify as needed.
 
     var response;
-    if(focusQuality > 30.0) {
-      var identifyBuffer = onyx.matToWsq(dstImage);
+    if(results.retval > 30.0) {
+      var identifyBuffer = onyx.matToWsq(results.dst);
       var identifyBase64 = identifyBuffer.toString('base64');
       // TODO: send identifyBase64 to AFIS database
       response = {
@@ -152,15 +134,29 @@ module.exports = function(methods) {
 
   methods.preprocessFingerprint = function(src, callback) {
     var srcImage = onyx.wsqToMat(new Buffer(src, 'base64'));
-    var dstImage = createEmptyMat(srcImage.rows, srcImage.cols, srcImage.type);
-    var focusQuality = onyx.preprocessFingerprint(srcImage, dstImage);
+
+    var results = onyx.preprocessFingerprint(srcImage);
 
     var response = {
-      "focusQuality": focusQuality,
-      "dst": onyx.matToWsq(dstImage).toString('base64')
+      "focusQuality": results.retval,
+      "dst": onyx.matToWsq(results.dst).toString('base64')
     };
     callback(null, response);
   };
+
+  /**
+   * Pyramids a WSQ formatted image in Base64 encoding to multiple scales.
+   * @param {string} image WSQ formatted image encoded as Base64.
+   * @param {array} scales An array of numbers defining the pyramid scales (3 is recommended).
+   * @param {Function(Error, array)} callback
+   */
+
+  methods.pyramidImage = function(image, scales, callback) {
+    var response;
+    // TODO
+    callback(null, response);
+  };
+
 
   /**
    * Verifies two WSQ encoded fingerprint images.
