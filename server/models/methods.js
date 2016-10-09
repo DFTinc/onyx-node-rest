@@ -152,8 +152,13 @@ module.exports = function(methods) {
    */
 
   methods.pyramidImage = function(image, scales, callback) {
-    var response;
-    // TODO
+    var srcImage = onyx.wsqToMat(new Buffer(image, 'base64'));
+
+    var imagePyramid = onyx.pyramidImage(srcImage, scales);
+
+    var response = imagePyramid.map(function(mat) {
+      return onyx.matToWsq(mat).toString('base64')
+    });
     callback(null, response);
   };
 
