@@ -229,7 +229,7 @@
       ],
       "returns": [
         {
-          "arg": "response",
+          "arg": "imagePyramid",
           "type": "array",
           "root": false,
           "description": "An array of WSQ formatted images encoded as Base64 at the specified scales."

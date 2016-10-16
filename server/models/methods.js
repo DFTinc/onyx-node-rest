@@ -47,29 +47,14 @@ module.exports = function(methods) {
    */
 
   methods.enroll = function(image, callback) {
-    var srcImage = onyx.wsqToMat(new Buffer(image, 'base64'));
-
-    var results = onyx.preprocessFingerprint(srcImage);
-
     // NOTE: Pseudocode below, please modify as needed.
-
-    var response;
-    if(results.retval > 30.0) {
-      var enrollBuffer = onyx.matToWsq(results.dst);
-      var enrollBase64 = enrollBuffer.toString('base64');
-      // TODO: send enrollBase64 to enrollment database
-      response = {
-        status: "Successfully enrolled fingerprint to AFIS database.",
-        enrollQuality: 100.0,
-        otherUsefulMetric: 25.0,
-        generatedUserId: Math.round(100.0*Math.random()) // replace with database ID for client if needed
-      }
-    } else {
-      response = {
-        status: "Failed to enroll fingerprint in AFIS database.",
-        enrollQuality: -1.0
-      }
-    }
+    // TODO: send Base64 encoded WSQ data to enrollment database
+    var response = {
+      status: "Successfully enrolled fingerprint to AFIS database.",
+      enrollQuality: 100.0,
+      otherUsefulMetric: 25.0,
+      generatedUserId: Math.round(100.0*Math.random()) // replace with database ID for client if needed
+    };
 
     callback(null, response);
   };
@@ -99,28 +84,15 @@ module.exports = function(methods) {
    */
 
   methods.identify = function(image, callback) {
-    var srcImage = onyx.wsqToMat(new Buffer(image, 'base64'));
-    var results = onyx.preprocessFingerprint(srcImage);
-
     // NOTE: Pseudocode below, please modify as needed.
+    // TODO: send Base64 encoded WSQ data to AFIS database
 
-    var response;
-    if(results.retval > 30.0) {
-      var identifyBuffer = onyx.matToWsq(results.dst);
-      var identifyBase64 = identifyBuffer.toString('base64');
-      // TODO: send identifyBase64 to AFIS database
-      response = {
-        status: "Successfully identified fingerprint in AFIS database.",
-        score: 100.0,
-        userId: Math.round(100.0*Math.random()),
-        otherUserInfo: "Relevant data to be shown on the client"
-      }
-    } else {
-      response = {
-        status: "Failed to idenfity fingerprint in AFIS database.",
-        score: -1.0
-      }
-    }
+    var response = {
+      status: "Successfully identified fingerprint in AFIS database.",
+      score: 100.0,
+      userId: Math.round(100.0*Math.random()),
+      otherUserInfo: "Relevant data to be shown on the client"
+    };
 
     callback(null, response);
   };
