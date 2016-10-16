@@ -1,7 +1,13 @@
 # Server Setup (Ubuntu 14.04 LTS)
 
 ##Install Node.js
-Node.js v4.6.0 LTS is the currently supported. Available [here](https://nodejs.org/en/download/).
+Node.js v4.6.0 LTS is the currently supported.
+
+Below shows how to install Node.js via NodeSource:
+```
+curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
+sudo apt-get install -y nodejs
+```
 
 ##Install IDKit 2.72
 ```
