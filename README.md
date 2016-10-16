@@ -45,7 +45,7 @@ npm start
 Once the server is running, please visit http://0.0.0.0:3000/explorer for
 a detailed look at the REST API endpoints served.
 
-## Install Strongloop (optional)
+##Install Strongloop (optional)
 This server is written utilizing the [Loopback.io](https://loopback.io/) framework.
 
 Install with the following:
@@ -60,3 +60,6 @@ slc loopback:remote-method
 ```
 
 Follow along with the prompts to create a new endpoint.
+
+##See also
+Android REST API client sample is available [here](https://github.com/DFTinc/onyx-demo-rest-client).
