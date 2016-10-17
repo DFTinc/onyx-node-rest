@@ -16,7 +16,7 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
     # Install Node.js
     curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
-    sudo apt-get install -y nodejs
+    sudo apt-get install -y nodejs=4.6.0-1nodesource1~trusty1
 
     # Install IDKit
     curl https://raw.githubusercontent.com/DFTinc/onyx-node-rest/master/install-idkit.sh | sh

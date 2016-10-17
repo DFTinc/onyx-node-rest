@@ -6,7 +6,7 @@ Node.js v4.6.0 LTS is the currently supported.
 Below shows how to install Node.js via NodeSource:
 ```
 curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
-sudo apt-get install -y nodejs
+sudo apt-get install -y nodejs=4.6.0-1nodesource1~trusty1
 ```
 
 ##Install IDKit 2.72
