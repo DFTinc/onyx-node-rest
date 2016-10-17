@@ -1,7 +1,7 @@
 # Server Setup (Ubuntu 14.04 LTS)
 
 ##Install Node.js
-Node.js v4.6.0 LTS is the currently supported.
+Node.js v4.6.0 LTS is currently supported.
 
 Below shows how to install Node.js via NodeSource:
 ```
