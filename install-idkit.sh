@@ -10,6 +10,6 @@ sudo dpkg -i /tmp/idkit_2.72ubuntu1_amd64.deb
 
 rm /tmp/idkit_2.72ubuntu1_amd64.deb
 
-echo "Please send the following Hardware ID to chatcher@diamondfortress.com:"
+echo "Please send the following Hardware ID to team@diamondfortress.com:"
 /usr/local/bin/linux_license_manager -I
 

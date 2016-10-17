@@ -14,6 +14,12 @@ sudo apt-get install -y nodejs=4.6.0-1nodesource1~trusty1
 curl https://raw.githubusercontent.com/DFTinc/onyx-node-rest/master/install-idkit.sh | sh
 ```
 
+The above will install IDKit 2.72 and print the hardware ID like below:
+```
+Please send the following Hardware ID to team@diamondfortress.com:
+Hardware ID of this device is: XXXXXXXXXXXXXXXX
+```
+
 ##Install iengine.lic
 Once you recieve your `iengine.lic` from DFT, deploy it with the following command:
 ```
