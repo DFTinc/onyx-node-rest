@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Installing dependencies of idkit-2.72"
-sudo apt-get update && sudo apt-get install -y libusb-0.1-4 libtbb2 libopencv-dev wget
+sudo apt-get update && sudo DEBIAN_FRONTEND=noninteractive apt-get install -q -y libusb-0.1-4 libtbb2 libopencv-dev wget
 
 echo "Installing idkit-2.72"
 wget -qO- https://github.com/DFTinc/onyx-node-rest/releases/download/2.72/idkit_2.72ubuntu1_amd64.deb > /tmp/idkit_2.72ubuntu1_amd64.deb
