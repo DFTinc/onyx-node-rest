@@ -55,6 +55,8 @@ a detailed look at the REST API endpoints served.
 ##Vagrant server example
 Included in this repository is a Vagrantfile demonstrating how to provision a server for `onyx-node-rest`.
 
+See [Vagrant: Getting Started](https://www.vagrantup.com/docs/getting-started/) for more details.
+
 Create the VM as follows:
 ```
 vagrant up
