@@ -36,12 +36,6 @@ git clone https://github.com/DFTinc/onyx-node-rest.git
 
 cd onyx-node-rest
 npm install
-
-# This is currently necessary until onyx-node is upgraded to 4.1.6 on NPM.
-cd node_modules
-wget -qO- https://github.com/DFTinc/onyx-node-rest/releases/download/4.1.6/onyx-node.zip > onyx-node.zip
-unzip onyx-node.zip
-rm onyx-node.zip
 ```
 
 ##Start the server

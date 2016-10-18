@@ -31,11 +31,5 @@ Vagrant.configure(2) do |config|
 
     cd onyx-node-rest
     npm install
-
-    # This is currently necessary until onyx-node is upgraded to 4.1.6 on NPM.
-    cd node_modules
-    wget -qO- https://github.com/DFTinc/onyx-node-rest/releases/download/4.1.6/onyx-node.zip > onyx-node.zip
-    unzip onyx-node.zip
-    rm onyx-node.zip
   SHELL
 end
