@@ -78,6 +78,25 @@ module.exports = function(methods) {
   };
 
   /**
+   * Generates an ISO/IEC 19794-2 formatted fingerprint template.
+   * @param {string} src WSQ formatted image encoded as Base64.
+   * @param {Function(Error, object)} callback
+   */
+
+  methods.generateIsoFingerprintTemplate = function(src, callback) {
+    var srcImage = onyx.wsqToMat(new Buffer(src, 'base64'));
+    var isoTemplate = onyx.generateIsoFingerprintTemplate(srcImage);
+
+    var response = {
+      fingerLocation: isoTemplate.getFingerLocation(),
+      quality: isoTemplate.getQuality(),
+      data: isoTemplate.getData().toString('base64')
+    };
+    callback(null, response);
+  };
+
+
+  /**
    * Performs identification with external server.
    * @param {string} image WSQ formatted image with Base64 encoding.
    * @param {Function(Error, object)} callback

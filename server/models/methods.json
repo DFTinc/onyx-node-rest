@@ -242,6 +242,32 @@
           "verb": "post"
         }
       ]
+    },
+    "generateIsoFingerprintTemplate": {
+      "isStatic": true,
+      "accepts": [
+        {
+          "arg": "src",
+          "type": "string",
+          "required": true,
+          "description": "WSQ formatted image encoded as Base64."
+        }
+      ],
+      "returns": [
+        {
+          "arg": "response",
+          "type": "object",
+          "root": true,
+          "description": "Returns a Base64 encoded ISO/IEC 19794-2 formatted FingerprintTemplate object."
+        }
+      ],
+      "description": "Generates an ISO/IEC 19794-2 formatted fingerprint template.",
+      "http": [
+        {
+          "path": "/generateisofingerprinttemplate",
+          "verb": "post"
+        }
+      ]
     }
   }
 }
