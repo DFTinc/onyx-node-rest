@@ -55,7 +55,7 @@ Create the VM as follows:
 ```
 vagrant up
 
-# get a cup of coffee..
+# get a cup of coffee...
 
 vagrant ssh
 
